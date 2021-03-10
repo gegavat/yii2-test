@@ -1,5 +1,14 @@
+/* Стили для экрана Входа */
+div.login-img {
+    text-align: center;
+    padding: 6px;
+    border-bottom: 1px solid #6e6e6e;
+    margin-bottom: 10px;
+}
+
+/* Стили в Админке */
 div.site-index {
-    border-bottom: solid 2px #626262;
+    /*border-bottom: solid 2px #626262;*/
 }
 div.apple-func {
     float: left;
@@ -12,11 +21,11 @@ div.apple-tree {
     background-image: url(/backend/web/images/apple-tree.png);
     background-size: cover;
     width: 665px;
-    height: 654px;
+    height: 794px;
     margin-left: auto;
     margin-right: auto;
 }
-div.apple-group {
+div.apple-tree-group {
     width: 580px;
     height: 400px;
     padding-top: 30px;
@@ -35,3 +44,29 @@ div.apple-bg {
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
 }
+
+/* Выбор цвета нового яблока */
+.labels > span > ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: block;
+    float: none;
+}
+.labels > span > ul > li {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #CCC;
+    overflow: hidden;
+    text-indent: -2000px;
+}
+.labels > span > ul > li.selected,
+.labels > span > ul > li:hover { border: 1px solid #000; }
+.labels > span > ul > li + li { margin-left: 5px; }
+.labels > span > ul > li.label1 { background: red; }
+.labels > span > ul > li.label2 { background: green; }
+.labels > span > ul > li.label3 { background: blue; }
+.labels > span > ul > li.label4 { background: yellow; }
+.labels > span > ul > li.label5 { background: orange; }
+.labels > span > ul > li.label6 { background: maroon; }
