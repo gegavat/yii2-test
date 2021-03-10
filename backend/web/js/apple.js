@@ -1,6 +1,6 @@
-// Настройка плагина contextMenu
+// настройка плагина contextMenu
 $.contextMenu.types.label = function(item, opt, root) {
-    $('<span>Укажите цвет<ul>'
+    $('<span>Укажите цвет:<ul>'
         + '<li class="label1" title="label 1" data-color="red">label 1'
         + '<li class="label2" title="label 2" data-color="green">label 2'
         + '<li class="label3" title="label 3" data-color="blue">label 3'
@@ -15,10 +15,11 @@ $.contextMenu.types.label = function(item, opt, root) {
                 url: "/apple/generate",
                 data: {color: appleColor},
                 success: function(res) {
-                    console.log (res);
-                },
-                error: function() {
-                    alert ("Ошибка запроса");
+                    var appleProperties = JSON.parse(res);
+                    $('.apple-tree-group').append(
+                        '<div class="apple" data-id="'+ appleProperties.id +'"'
+                        + 'style="background:' + appleProperties.color + '"></div>'
+                    );
                 }
             });
 
@@ -36,5 +37,52 @@ $.contextMenu({
     trigger: 'left',
     items: {
         label: {type: "label", customName: "label"}
+    }
+});
+
+// привязка плагина contextMenu к яблокам на дереве
+$.contextMenu({
+    selector: '.apple',
+    trigger: 'left',
+    items: {
+        fall: {
+            name: "Уронить",
+            disabled: false,
+            callback: function(key, opt) {
+                var apple = this;
+                var appleId = $(apple).data('id');
+                $.ajax({
+                    url: "/apple/fall",
+                    data: {id: appleId},
+                    success: function(color) {
+                        console.log (color);
+                        // анимация падения яблока
+                        var apOfTop = $(apple).offset().top;
+                        var apOfLeft = $(apple).offset().left;
+                        $(apple).css('position', 'fixed');
+                        $(apple).offset({top:apOfTop, left:apOfLeft});
+                        $(apple).animate({
+                                top: '+600',
+                                opacity: 0
+                            },
+                            500,
+                            function() {
+                                $(apple).remove();
+                                $('.apple-ground-group').append(
+                                    '<div class="apple-on-ground" data-id="'+ appleId +'"'
+                                    + 'style="background:' + color + '"></div>'
+                                );
+                            }
+                        );
+                    }
+                });
+
+            }
+        },
+        eat: {
+            name: "Откусить",
+            disabled: true,
+            callback: function(key, opt) {}
+        }
     }
 });

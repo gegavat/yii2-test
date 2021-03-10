@@ -2,12 +2,14 @@
 use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
+/* @var $applesFromTree \app\models\Apple */
+/* @var $applesOnGround \app\models\Apple */
 
-$this->title = 'My Yii Application';
+$this->title = 'Яблочное приложение';
 ?>
+
 <div class="site-index">
     <div class="apple-func">
-
         <a href="#" class="btn btn-success" id="apple-generate">
             <span class="glyphicon glyphicon-grain" aria-hidden="true"></span>
             Вырастить яблоко
@@ -18,39 +20,20 @@ $this->title = 'My Yii Application';
     <div class="apple-tree-box">
         <div class="apple-tree">
             <div class="apple-tree-group">
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
-                <div class="apple-bg"></div>
+                <?php foreach ( $applesFromTree as $apple ) : ?>
+                    <div class="apple" data-id="<?= $apple->id ?>" style="background:<?= $apple->color ?>"></div>
+                <?php endforeach; ?>
             </div>
+
+            <div class="apple-ground-group">
+                <?php foreach ( $applesOnGround as $apple ) : ?>
+                    <div class="apple-on-ground" data-id="<?= $apple->id ?>" style="background:<?= $apple->color ?>"></div>
+                <?php endforeach; ?>
+            </div>
+
         </div>
+
+
     </div>
 
 </div>
-
-
-
-<?php Modal::begin([
-//    'size' => 'modal-sm',
-    /*'options' => [
-        'style' => [
-            'margin-top' => '5%'
-        ]
-    ],*/
-    'header' => '<h3>Укажите цвет яблока</h3>',
-    'id' => 'apple-generate-modal',
-]); ?>
-<?php Modal::end() ?>

@@ -12,7 +12,19 @@ class AppleController extends Controller {
         if ( !Yii::$app->request->isAjax ) exit;
         $apple = new Apple();
         $apple->color = $color;
-        if ( !$apple->save() ) Yii::warning($apple->errors);
+        $apple->save();
+        return json_encode([
+            'id' => $apple->id,
+            'color' => $color,
+        ]);
+    }
+
+    public function actionFall($id) {
+        if ( !Yii::$app->request->isAjax ) exit;
+        $apple = Apple::findOne($id);
+        $apple->status = 'on_ground';
+        $apple->update();
+        return ($apple->color);
     }
 
 }

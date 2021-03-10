@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use app\models\Apple;
 
 /**
  * Site controller
@@ -58,9 +59,18 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
-        return $this->render('index');
+    public function actionIndex() {
+        $applesFromTree = Apple::find()
+            ->where(['status' => 'on_tree'])
+            ->all();
+        $applesOnGround = Apple::find()
+            ->where(['in','status', ['on_ground', 'spoiled']])
+            ->all();
+
+        return $this->render('index', compact(
+            'applesFromTree',
+            'applesOnGround'
+        ));
     }
 
     /**
