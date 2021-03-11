@@ -11,8 +11,18 @@ div.site-index {
     /*border-bottom: solid 2px #626262;*/
 }
 div.apple-func {
-    float: left;
+    text-align: center;
 
+}
+div.apple-tip {
+    font-size: 1.2em;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #e0e0e0;
+    width: 660px;
+    margin-left: auto;
+    margin-right: auto;
 }
 div.apple-tree-box {
     margin-top: 10px;
@@ -63,6 +73,12 @@ div.apple-on-ground {
     border-radius: 50%;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
+}
+.output-eat-apple {
+    font-size: 1.2em;
+}
+.output-eat-apple:after {
+    content: " %";
 }
 
 /* Выбор цвета нового яблока */

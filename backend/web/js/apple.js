@@ -40,11 +40,37 @@ $.contextMenu({
     }
 });
 
+// при нажатии на яблоко на дереве сохраняем элемент
+var selApple;
+$('.apple-tree-group').on('click', '.apple', function() {
+    selApple = this;
+});
+
+// при закрытии модального окна просмотра свойств яблока
+$('#apple-properties-modal').on('hidden.bs.modal', function (e) {
+    $('.apple-prop-color').empty();
+    $('.apple-prop-status').empty();
+    $('.apple-prop-created_at').empty();
+});
+
 // привязка плагина contextMenu к яблокам на дереве
 $.contextMenu({
     selector: '.apple',
     trigger: 'left',
     items: {
+        properties: {
+            name: "Свойства яблока",
+            callback: function(key, opt) {
+                // открытие модального окна просмотра свойств яблока
+                var appColor = $(selApple).data('color');
+                var appCreatedAt = $(selApple).data('created_at');
+                $('#apple-properties-modal').modal('show');
+                $('.apple-prop-color').append(appColor.toUpperCase());
+                $('.apple-prop-color').css('color', appColor);
+                $('.apple-prop-status').append("На дереве");
+                $('.apple-prop-created_at').append(new Date(appCreatedAt));
+            }
+        },
         fall: {
             name: "Уронить",
             disabled: false,
@@ -81,8 +107,63 @@ $.contextMenu({
         },
         eat: {
             name: "Откусить",
-            disabled: true,
-            callback: function(key, opt) {}
+            disabled: true
         }
     }
 });
+
+// при нажатии на яблоко на земле сохраняем элемент
+var selApple;
+$('.apple-tree-group').on('click', '.apple', function() {
+    selApple = this;
+});
+
+// при закрытии модального окна просмотра свойств яблока
+$('#apple-properties-modal').on('hidden.bs.modal', function (e) {
+    $('.apple-prop-color').empty();
+    $('.apple-prop-status').empty();
+    $('.apple-prop-created_at').empty();
+});
+
+// привязка плагина contextMenu к яблокам на земле
+$.contextMenu({
+    selector: '.apple-on-ground',
+    trigger: 'left',
+    items: {
+        properties: {
+            name: "Свойства яблока",
+            callback: function(key, opt) {
+                // открытие модального окна просмотра свойств яблока
+                var appColor = $(selApple).data('color');
+                var appCreatedAt = $(selApple).data('created_at');
+                $('#apple-properties-modal').modal('show');
+                $('.apple-prop-color').append(appColor.toUpperCase());
+                $('.apple-prop-color').css('color', appColor);
+                $('.apple-prop-status').append("На дереве");
+                $('.apple-prop-created_at').append(new Date(appCreatedAt));
+            }
+        },
+        fall: {
+            name: "Уронить",
+            disabled: true
+        },
+        eat: {
+            name: "Откусить",
+            callback: function(key, opt) {
+                // открытие модального окна поедания яблока
+                $('#apple-eat-modal').modal('show');
+
+
+                // var appColor = $(selApple).data('color');
+                // var appCreatedAt = $(selApple).data('created_at');
+                // $('#apple-properties-modal').modal('show');
+                // $('.apple-prop-color').append(appColor.toUpperCase());
+                // $('.apple-prop-color').css('color', appColor);
+                // $('.apple-prop-status').append("На дереве");
+                // $('.apple-prop-created_at').append(new Date(appCreatedAt));
+            }
+        }
+    }
+});
+
+

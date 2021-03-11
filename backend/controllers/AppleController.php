@@ -23,6 +23,7 @@ class AppleController extends Controller {
         if ( !Yii::$app->request->isAjax ) exit;
         $apple = Apple::findOne($id);
         $apple->status = 'on_ground';
+        $apple->fallen_at = time();
         $apple->update();
         return ($apple->color);
     }
