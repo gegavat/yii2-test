@@ -93,11 +93,12 @@ $.contextMenu({
                             },
                             500,
                             function() {
-                                $(apple).remove();
+                                /*$(apple).remove();
                                 $('.apple-ground-group').append(
                                     '<div class="apple-on-ground" data-id="'+ appleId +'"'
                                     + 'style="background:' + color + '"></div>'
-                                );
+                                );*/
+                                location.reload();
                             }
                         );
                     }
@@ -118,12 +119,14 @@ $('.apple-ground-group').on('click', '.apple-on-ground', function() {
     selGrApple = this;
 });
 
-// при закрытии модального окна просмотра свойств яблока
-// $('#apple-properties-modal').on('hidden.bs.modal', function (e) {
-//     $('.apple-prop-color').empty();
-//     $('.apple-prop-status').empty();
-//     $('.apple-prop-created_at').empty();
-// });
+// при закрытии модального окна просмотра свойств яблока с земли
+$('#apple_on_ground-properties-modal').on('hidden.bs.modal', function (e) {
+    $('.apple_on_ground-prop-color').empty();
+    $('.apple_on_ground-prop-status').empty();
+    $('.apple_on_ground-prop-created_at').empty();
+    $('.apple_on_ground-prop-fallen_at').empty();
+    $('.apple_on_ground-prop-residue').empty();
+});
 
 // привязка плагина contextMenu к яблокам на земле
 $.contextMenu({
@@ -134,15 +137,19 @@ $.contextMenu({
             name: "Свойства яблока",
             callback: function(key, opt) {
                 // открытие модального окна просмотра свойств яблока
-                // var grAppColor = $(selGrApple).data('color');
-                // var grAppCreatedAt = $(selGrApple).data('created_at');
-                // var appColor = $(selGrApple).data('color');
-                // var appCreatedAt = $(selGrApple).data('created_at');
-                // $('#apple-properties-modal').modal('show');
-                // $('.apple-prop-color').append(appColor.toUpperCase());
-                // $('.apple-prop-color').css('color', appColor);
-                // $('.apple-prop-status').append("На дереве");
-                // $('.apple-prop-created_at').append(new Date(appCreatedAt));
+                var grAppColor = $(selGrApple).data('color');
+                console.log (grAppColor);
+                var grAppCreatedAt = $(selGrApple).data('created_at');
+                var grAppFallenAt = $(selGrApple).data('fallen_at');
+                var grAppStatus = $(selGrApple).data('status');
+                var grAppResidue = $(selGrApple).data('residue');
+                $('#apple_on_ground-properties-modal').modal('show');
+                $('.apple_on_ground-prop-color').append(grAppColor.toUpperCase());
+                $('.apple_on_ground-prop-color').css('color', grAppColor);
+                grAppStatus === 'on_ground' ? $('.apple_on_ground-prop-status').append("На земле") : $('.apple_on_ground-prop-status').append("Испортилось");
+                $('.apple_on_ground-prop-created_at').append(new Date(grAppCreatedAt));
+                $('.apple_on_ground-prop-fallen_at').append(new Date(grAppFallenAt));
+                $('.apple_on_ground-prop-residue').append(grAppResidue);
             }
         },
         fall: {
@@ -166,6 +173,10 @@ $.contextMenu({
 
 // действие при откусывании яблока
 $('.eat-apple-btn').on('click', function() {
+    if ( $(selGrApple).data('status') === 'spoiled' ){
+        alert ('Яблоко уже испортилось');
+        return false;
+    }
     $.ajax({
         url: "/apple/eat",
         data: {
@@ -180,3 +191,8 @@ $('.eat-apple-btn').on('click', function() {
     });
 });
 
+
+$('.apple-on-ground').each(function( index ) {
+    var residue = $(this).data('residue');
+    $(this).append("<div class='eated-piece' style='margin-left:" + residue + "%'></div>")
+});

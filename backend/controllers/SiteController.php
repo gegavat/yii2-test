@@ -65,6 +65,10 @@ class SiteController extends Controller
             ->all();
         $applesOnGround = Apple::find()
             ->where(['status' => 'on_ground'])
+//            ->orderBy('fallen_at ASC')
+            ->all();
+        $applesSpoiled = Apple::find()
+            ->where(['status' => 'spoiled'])
             ->all();
 
         // проверка на гнилые яблоки
@@ -79,9 +83,6 @@ class SiteController extends Controller
             }
         }
 
-        $applesSpoiled = Apple::find()
-            ->where(['status' => 'spoiled'])
-            ->all();
         $applesOnGround = array_merge($applesOnGround, $applesSpoiled);
 
         return $this->render('index', compact(

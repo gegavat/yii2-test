@@ -51,6 +51,7 @@ $this->title = 'Яблочное приложение';
 
 </div>
 
+<!-- Свойства яблок на дереве -->
 <?php Modal::begin([
 //    'size' => 'modal-lg',
     'header' => '<h2>Свойства выбранного яблока</h2>',
@@ -69,6 +70,7 @@ $this->title = 'Яблочное приложение';
     </div>
 <?php Modal::end() ?>
 
+<!-- Поедание яблок с земли -->
 <?php Modal::begin([
 //    'size' => 'modal-sm',
     'header' => '<h2>Поедание яблока</h2>',
@@ -81,4 +83,29 @@ $this->title = 'Яблочное приложение';
     <br>
     <a href="#" class="btn btn-success eat-apple-btn">Выполнить</a>
 </div>
+<?php Modal::end() ?>
+
+<!-- Свойства яблок на земле -->
+<?php Modal::begin([
+//    'size' => 'modal-lg',
+    'header' => '<h2>Свойства выбранного яблока</h2>',
+    'id' => 'apple_on_ground-properties-modal',
+]); ?>
+    <div style="font-size: 1.2em">
+        <div>Цвет яблока:</div>
+        <div class="apple_on_ground-prop-color" style="font-style: italic"></div>
+        <br>
+        <div>Статус яблока:</div>
+        <div class="apple_on_ground-prop-status" style="font-style: italic"></div>
+        <br>
+        <div>Выращено:</div>
+        <div class="apple_on_ground-prop-created_at" style="font-style: italic"></div>
+        <br>
+        <div>Упало:</div>
+        <div class="apple_on_ground-prop-fallen_at" style="font-style: italic"></div>
+        <br>
+        <div>Остаток яблока в процентах:</div>
+        <div class="apple_on_ground-prop-residue" style="font-style: italic"></div>
+        <br>
+    </div>
 <?php Modal::end() ?>

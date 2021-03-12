@@ -73,12 +73,24 @@ div.apple-on-ground {
     border-radius: 50%;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
+    overflow: hidden;
 }
 .output-eat-apple {
     font-size: 1.2em;
 }
 .output-eat-apple:after {
     content: " %";
+}
+.eated-piece {
+    background-color: #e6e6e6;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    box-sizing:border-box;
+    width: 100%;
+    height: 100%;
+    max-width:100%;
+    margin-left: 100%;
 }
 
 /* Выбор цвета нового яблока */

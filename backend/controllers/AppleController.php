@@ -43,6 +43,7 @@ class AppleController extends Controller {
             Yii::error('Нельзя откусить больше, чем осталось');
             exit;
         }
+        // если откусили последний кусок, удаляем яблоко из БД
         if ( $apple->residue == $piece ) {
             $apple->delete();
         } else {
