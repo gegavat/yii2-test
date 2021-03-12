@@ -66,4 +66,5 @@ class Apple extends \yii\db\ActiveRecord
             'residue' => 'Residue',
         ];
     }
+
 }

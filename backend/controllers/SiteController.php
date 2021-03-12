@@ -64,8 +64,25 @@ class SiteController extends Controller
             ->where(['status' => 'on_tree'])
             ->all();
         $applesOnGround = Apple::find()
-            ->where(['in','status', ['on_ground', 'spoiled']])
+            ->where(['status' => 'on_ground'])
             ->all();
+
+        // проверка на гнилые яблоки
+        $fallenAtArray = array_column( $applesOnGround, 'fallen_at', 'id' );
+        foreach ( $fallenAtArray as $id => $dbTime ) {
+            // если прошло 5 часов после падения, меняем статус на Гнилое
+            if (  time() - $dbTime > 18000 ) {
+                $apple = Apple::findOne($id);
+                $apple->status = 'spoiled';
+                $apple->update();
+                Yii::warning('Яблоко №' . $id . ' испортилось');
+            }
+        }
+
+        $applesSpoiled = Apple::find()
+            ->where(['status' => 'spoiled'])
+            ->all();
+        $applesOnGround = array_merge($applesOnGround, $applesSpoiled);
 
         return $this->render('index', compact(
             'applesFromTree',

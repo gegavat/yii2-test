@@ -39,6 +39,7 @@ $this->title = 'Яблочное приложение';
                          data-created_at="<?= $apple->created_at ?>"
                          data-fallen_at="<?= $apple->fallen_at ?>"
                          data-status="<?= $apple->status ?>"
+                         data-residue="<?= $apple->residue ?>"
                          style="background:<?= $apple->color ?>">
                     </div>
                 <?php endforeach; ?>
@@ -76,8 +77,8 @@ $this->title = 'Яблочное приложение';
 <div style="font-size: 1.2em">
     <div>Сколько процентов откусим?</div>
     <input type="range" min="0" max="100" step="1" value="20" oninput="this.nextElementSibling.value = this.value">
-    <output class="output-eat-apple">20</output>
+    <output class="output-eat-apple"></output>
     <br>
-    <a href="#" class="btn btn-success">Выполнить</a>
+    <a href="#" class="btn btn-success eat-apple-btn">Выполнить</a>
 </div>
 <?php Modal::end() ?>
