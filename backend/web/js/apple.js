@@ -20,6 +20,7 @@ $.contextMenu.types.label = function(item, opt, root) {
                         '<div class="apple" data-id="'+ appleProperties.id +'"'
                         + 'style="background:' + appleProperties.color + '"></div>'
                     );
+                    location.reload();
                 }
             });
 
@@ -68,7 +69,7 @@ $.contextMenu({
                 $('.apple-prop-color').append(appColor.toUpperCase());
                 $('.apple-prop-color').css('color', appColor);
                 $('.apple-prop-status').append("На дереве");
-                $('.apple-prop-created_at').append(new Date(appCreatedAt));
+                $('.apple-prop-created_at').append(new Date(appCreatedAt * 1000));
             }
         },
         fall: {
@@ -147,8 +148,8 @@ $.contextMenu({
                 $('.apple_on_ground-prop-color').append(grAppColor.toUpperCase());
                 $('.apple_on_ground-prop-color').css('color', grAppColor);
                 grAppStatus === 'on_ground' ? $('.apple_on_ground-prop-status').append("На земле") : $('.apple_on_ground-prop-status').append("Испортилось");
-                $('.apple_on_ground-prop-created_at').append(new Date(grAppCreatedAt));
-                $('.apple_on_ground-prop-fallen_at').append(new Date(grAppFallenAt));
+                $('.apple_on_ground-prop-created_at').append(new Date(grAppCreatedAt * 1000));
+                $('.apple_on_ground-prop-fallen_at').append(new Date(grAppFallenAt * 1000));
                 $('.apple_on_ground-prop-residue').append(grAppResidue);
             }
         },
