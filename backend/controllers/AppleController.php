@@ -48,16 +48,28 @@ class AppleController extends Controller {
         }
         if ( $apple->residue < $piece ) {
             Yii::error('Нельзя откусить больше, чем осталось');
-            exit;
+            return json_encode([
+                'result' => 'error',
+                'message' => 'Нельзя откусить больше, чем осталось',
+            ]);
         }
         // если откусили последний кусок, удаляем яблоко из БД
         if ( $apple->residue == $piece ) {
             $apple->delete();
+            return json_encode([
+                'result' => 'success',
+                'message' => 'Яблоко полностью съедено',
+                'residue' => 0,
+            ]);
         } else {
             $apple->residue = $apple->residue - $piece;
             $apple->update();
+            return json_encode([
+                'result' => 'success',
+                'message' => 'Часть яблока устпешно откушена',
+                'residue' => $apple->residue,
+            ]);
         }
-        return $apple->residue;
     }
 
 }

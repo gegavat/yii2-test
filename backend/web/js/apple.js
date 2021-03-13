@@ -171,7 +171,7 @@ $.contextMenu({
                 // открытие модального окна поедания яблока
                 $('#apple-eat-modal output').empty();
                 var grAppId = $(selGrApple).data('id');
-                var grAppResidue = $(selGrApple).data('residue');
+                var grAppResidue = $(selGrApple).attr('data-residue');
                 $('#apple-eat-modal').modal('show');
                 $('#apple-eat-modal input[type="range"]').val(grAppResidue);
                 $('#apple-eat-modal output').append(grAppResidue);
@@ -192,10 +192,23 @@ $('.eat-apple-btn').on('click', function() {
             id: $(selGrApple).data('id'),
             piece: $('#apple-eat-modal input[type="range"]').val()
         },
-        success: function(residue) {
-            $(selGrApple).attr('data-residue', residue);
-            $(selGrApple).empty();
-            $(selGrApple).append("<div class='eated-piece' style='margin-left:" + residue + "%'></div>");
+        success: function(receivedData) {
+            var data = JSON.parse(receivedData);
+            if ( data.result === 'error' ) {
+                alert (data.message);
+                return false;
+            }
+            if ( data.result === 'success' ) {
+                if ( data.residue === 0 ) {
+                    $(selGrApple).remove();
+                    alert (data.message);
+                } else {
+                    $(selGrApple).attr('data-residue', data.residue);
+                    $(selGrApple).empty();
+                    $(selGrApple).append("<div class='eated-piece' style='margin-left:" + data.residue + "%'></div>");
+                    // alert (data.message);
+                }
+            }
             $('#apple-eat-modal').modal('hide');
             // location.reload();
         }
