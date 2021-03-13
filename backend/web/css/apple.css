@@ -75,6 +75,16 @@ div.apple-on-ground {
     -webkit-border-radius: 50%;
     overflow: hidden;
 }
+div.apple-worm {
+    background-image: url(/backend/web/images/apple-worm.png);
+    background-position: center center;
+    -webkit-background-size:;
+    background-size: contain;
+    width: 49px;
+    height: 49px;
+    position: absolute;
+    /*object-fit: contain;*/
+}
 .output-eat-apple {
     font-size: 1.2em;
 }

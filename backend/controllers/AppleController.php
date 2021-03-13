@@ -15,7 +15,8 @@ class AppleController extends Controller {
         $apple->save();
         return json_encode([
             'id' => $apple->id,
-            'color' => $color,
+            'color' => $apple->color,
+            'created_at' => $apple->created_at,
         ]);
     }
 
@@ -25,7 +26,13 @@ class AppleController extends Controller {
         $apple->status = 'on_ground';
         $apple->fallen_at = time();
         $apple->update();
-        return $apple->color;
+        return json_encode([
+            'id' => $apple->id,
+            'color' => $apple->color,
+            'created_at' => $apple->created_at,
+            'fallen_at' => $apple->fallen_at,
+            'residue' => $apple->residue,
+        ]);
     }
 
     public function actionEat($id, $piece) {

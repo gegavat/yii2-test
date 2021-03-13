@@ -18,9 +18,12 @@ $.contextMenu.types.label = function(item, opt, root) {
                     var appleProperties = JSON.parse(res);
                     $('.apple-tree-group').append(
                         '<div class="apple" data-id="'+ appleProperties.id +'"'
+                        + 'data-color="'+ appleProperties.color +'"'
+                        + 'data-created_at="'+ appleProperties.created_at +'"'
                         + 'style="background:' + appleProperties.color + '"></div>'
                     );
-                    location.reload();
+                    // location.reload();
+                    $('#btn_pjax_apple').click();
                 }
             });
 
@@ -81,8 +84,8 @@ $.contextMenu({
                 $.ajax({
                     url: "/apple/fall",
                     data: {id: appleId},
-                    success: function(color) {
-                        console.log (color);
+                    success: function(res) {
+                        var appleProperties = JSON.parse(res);
                         // анимация падения яблока
                         var apOfTop = $(apple).offset().top;
                         var apOfLeft = $(apple).offset().left;
@@ -94,12 +97,17 @@ $.contextMenu({
                             },
                             500,
                             function() {
-                                /*$(apple).remove();
+                                $(apple).remove();
                                 $('.apple-ground-group').append(
                                     '<div class="apple-on-ground" data-id="'+ appleId +'"'
-                                    + 'style="background:' + color + '"></div>'
-                                );*/
-                                location.reload();
+                                    + 'data-color="'+ appleProperties.color +'"'
+                                    + 'data-created_at="'+ appleProperties.created_at +'"'
+                                    + 'data-fallen_at="'+ appleProperties.fallen_at +'"'
+                                    + 'data-status="on_ground"'
+                                    + 'data-residue="'+ appleProperties.residue +'"'
+                                    + 'style="background:' + appleProperties.color + '"></div>'
+                                );
+                                // location.reload();
                             }
                         );
                     }
@@ -185,15 +193,18 @@ $('.eat-apple-btn').on('click', function() {
             piece: $('#apple-eat-modal input[type="range"]').val()
         },
         success: function(residue) {
-            // $(selGrApple).attr('data-residue', residue);
+            $(selGrApple).attr('data-residue', residue);
+            $(selGrApple).empty();
+            $(selGrApple).append("<div class='eated-piece' style='margin-left:" + residue + "%'></div>");
             $('#apple-eat-modal').modal('hide');
-            location.reload();
+            // location.reload();
         }
     });
 });
 
-
+// отображение откушенной части яблока
 $('.apple-on-ground').each(function( index ) {
     var residue = $(this).data('residue');
     $(this).append("<div class='eated-piece' style='margin-left:" + residue + "%'></div>")
 });
+

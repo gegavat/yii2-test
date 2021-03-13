@@ -60,18 +60,8 @@ class SiteController extends Controller
      * @return string
      */
     public function actionIndex() {
-        $applesFromTree = Apple::find()
-            ->where(['status' => 'on_tree'])
-            ->all();
-        $applesOnGround = Apple::find()
-            ->where(['status' => 'on_ground'])
-//            ->orderBy('fallen_at ASC')
-            ->all();
-        $applesSpoiled = Apple::find()
-            ->where(['status' => 'spoiled'])
-            ->all();
-
         // проверка на гнилые яблоки
+        $applesOnGround = Apple::find()->where(['status' => 'on_ground'])->all();
         $fallenAtArray = array_column( $applesOnGround, 'fallen_at', 'id' );
         foreach ( $fallenAtArray as $id => $dbTime ) {
             // если прошло 5 часов после падения, меняем статус на Гнилое
@@ -83,8 +73,13 @@ class SiteController extends Controller
             }
         }
 
-        $applesOnGround = array_merge($applesOnGround, $applesSpoiled);
-
+        $applesFromTree = Apple::find()
+            ->where(['status' => 'on_tree'])
+            ->all();
+        $applesOnGround = Apple::find()
+            ->where(['in', 'status', ['on_ground', 'spoiled']])
+            ->orderBy('fallen_at ASC')
+            ->all();
         return $this->render('index', compact(
             'applesFromTree',
             'applesOnGround'

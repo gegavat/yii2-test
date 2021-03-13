@@ -1,5 +1,6 @@
 <?php
 use yii\bootstrap\Modal;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $applesFromTree \app\models\Apple */
@@ -41,6 +42,9 @@ $this->title = 'Яблочное приложение';
                          data-status="<?= $apple->status ?>"
                          data-residue="<?= $apple->residue ?>"
                          style="background:<?= $apple->color ?>">
+                        <?php if ( $apple->status === 'spoiled' ) : ?>
+                            <div class="apple-worm"></div>
+                        <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
             </div>
